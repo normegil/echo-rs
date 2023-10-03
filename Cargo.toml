@@ -8,3 +8,4 @@ authors = ["Olivier Ory <mail@olivierory.eu>"]
 
 [dependencies]
 clap = { version = "4.4.6", features = ["derive"] }
+trycmd = "0.14.19"
