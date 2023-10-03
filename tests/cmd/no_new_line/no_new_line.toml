@@ -1,0 +1,2 @@
+bin.name = "echo-rs"
+args = "-e test"
