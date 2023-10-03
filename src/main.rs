@@ -3,9 +3,11 @@ use clap::{Parser};
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
 struct Args {
+    /// Flag to disable new line character at the end of echoed input
     #[arg(short, default_value_t = false)]
     no_new_line: bool,
 
+    /// Flag to enable interpretation of escape characters
     #[arg(short, default_value_t = false)]
     escapes: bool,
 
