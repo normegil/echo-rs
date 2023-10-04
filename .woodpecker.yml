@@ -61,3 +61,19 @@ steps:
     secrets:
       - nexus_user
       - nexus_password
+  ntfy-success:
+    image: "codeberg.org/l-x/woodpecker-ntfy"
+    settings:
+      url: "https://ntfy.normegil.be/personal-ci-D2bTlogXsDdFwhpH"
+      tags: "heavy_check_mark"
+      message: "${CI_REPO_NAME}: Succès du pipeline"
+    when:
+      status: success
+  ntfy-failure:
+    image: "codeberg.org/l-x/woodpecker-ntfy"
+    settings:
+      url: "https://ntfy.normegil.be/personal-ci-D2bTlogXsDdFwhpH"
+      tags: "warning"
+      message: "${CI_REPO_NAME}: Echec du pipeline"
+    when:
+      status: failure
