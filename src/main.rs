@@ -37,3 +37,40 @@ fn main() {
         println!("{}", to_print);
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use clap::Parser;
+    use super::Args;
+
+    #[test]
+    fn args_raw() {
+        let args = Args::parse_from(&["echo-rs", "test"]);
+        assert_eq!(args.no_new_line, false);
+        assert_eq!(args.escapes, false);
+        assert_eq!(args.input, Some(String::from("test")));
+    }
+    #[test]
+    fn args_no_new_line() {
+        let args = Args::parse_from(&["echo-rs", "-n", "test"]);
+        assert_eq!(args.no_new_line, true);
+        assert_eq!(args.escapes, false);
+        assert_eq!(args.input, Some(String::from("test")));
+    }
+
+    #[test]
+    fn args_escapes() {
+        let args = Args::parse_from(&["echo-rs", "-e", "test"]);
+        assert_eq!(args.no_new_line, false);
+        assert_eq!(args.escapes, true);
+        assert_eq!(args.input, Some(String::from("test")));
+    }
+
+    #[test]
+    fn args_escapes_no_new_line() {
+        let args = Args::parse_from(&["echo-rs", "-e", "-n", "test"]);
+        assert_eq!(args.no_new_line, true);
+        assert_eq!(args.escapes, true);
+        assert_eq!(args.input, Some(String::from("test")));
+    }
+}
