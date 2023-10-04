@@ -23,10 +23,7 @@ fn main() {
     }
 
     if args.escapes {
-        to_print = to_print.replace("\\\\", "\\")
-            .replace("\\n", "\n")
-            .replace("\\r", "\r")
-            .replace("\\t", "\t");
+        to_print = escape(&to_print);
     } else {
         to_print = to_print.replace("\\", "\\\\");
     }
@@ -38,10 +35,18 @@ fn main() {
     }
 }
 
+fn escape(input: &str) -> String {
+    input.replace("\\\\", "\\")
+        .replace("\\n", "\n")
+        .replace("\\r", "\r")
+        .replace("\\t", "\t")
+}
+
 #[cfg(test)]
 mod tests {
     use clap::Parser;
     use super::Args;
+    use super::escape;
 
     #[test]
     fn args_raw() {
@@ -72,5 +77,33 @@ mod tests {
         assert_eq!(args.no_new_line, true);
         assert_eq!(args.escapes, true);
         assert_eq!(args.input, Some(String::from("test")));
+    }
+
+    #[test]
+    fn test_escape_backslash() {
+        let input = "abc\\\\def";
+        let result = escape(input);
+        assert_eq!(result, "abc\\def");
+    }
+
+    #[test]
+    fn test_escape_newline() {
+        let input = "line1\\nline2";
+        let result = escape(input);
+        assert_eq!(result, "line1\nline2");
+    }
+
+    #[test]
+    fn test_escape_carriage_return() {
+        let input = "text\\rwith\\rreturns";
+        let result = escape(input);
+        assert_eq!(result, "text\rwith\rreturns");
+    }
+
+    #[test]
+    fn test_escape_tab() {
+        let input = "tabbed\\ttext";
+        let result = escape(input);
+        assert_eq!(result, "tabbed\ttext");
     }
 }
