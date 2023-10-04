@@ -1,4 +1,4 @@
-use clap::{Parser};
+use clap::Parser;
 
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
@@ -25,7 +25,7 @@ fn main() {
     if args.escapes {
         to_print = escape(&to_print);
     } else {
-        to_print = to_print.replace("\\", "\\\\");
+        to_print = to_print.replace('\\', "\\\\");
     }
 
     if args.no_new_line {
@@ -36,7 +36,8 @@ fn main() {
 }
 
 fn escape(input: &str) -> String {
-    input.replace("\\\\", "\\")
+    input
+        .replace("\\\\", "\\")
         .replace("\\n", "\n")
         .replace("\\r", "\r")
         .replace("\\t", "\t")
@@ -44,9 +45,9 @@ fn escape(input: &str) -> String {
 
 #[cfg(test)]
 mod tests {
-    use clap::Parser;
-    use super::Args;
     use super::escape;
+    use super::Args;
+    use clap::Parser;
 
     #[test]
     fn args_raw() {
